@@ -1,25 +1,9 @@
 import puppeteer from 'puppeteer';
 import Jimp from 'Jimp';
 import XLSX from 'xlsx';
-import fs from 'fs';
-import path from 'path';
 import sendEmail from '../Modules/Email/Email.js'
+import deletePngFiles from '../Modules/Delete_img/Delete_file.js'
 import 'dotenv/config';
-
-// Função para deletar todos os arquivos .png na pasta atual
-function deletePngFiles(directory) {    
-    fs.readdir(directory, (err, files) => {
-      if (err) throw err;
-  
-      for (const file of files) {
-        if (path.extname(file) === '.png') {
-          fs.unlink(path.join(directory, file), err => {
-            if (err) throw err;
-          });
-        }
-      }
-    });
-  }
 
 function paths(){
     const directory1 = 'C:\\Users\\ggreco\\Documents\\Automações\\Code\\Node\\Multas\\PRD\\07 - Multas\\images';
