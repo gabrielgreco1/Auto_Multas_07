@@ -1,0 +1,6 @@
+.env
+*.png
+*.bat
+backup.js
+/node_modules
+/images
