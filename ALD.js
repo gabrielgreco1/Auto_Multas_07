@@ -209,6 +209,11 @@ console.log('--------------------------//--------------------------//-----------
         const frame = await frameElement.contentFrame();
 
 
+        await new Promise(resolve => setTimeout(resolve, 500));
+        await frame.click('#radioDataAtual')
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+    
         // Arruma o array com os locatários
         let companiesArray = process.env.strings.split("\n").map(s => s.trim());
         // Verifica se o elemento está presente
@@ -232,6 +237,7 @@ console.log('--------------------------//--------------------------//-----------
             workbook.Sheets[sheet_name_list[0]] = ws;
             XLSX.writeFile(workbook, 'S:\\Automacoes\\Multas\\07 - Multas ALD\\Retorno\\Validacao_retorno.xlsx');
             await page.reload();
+            await new Promise(resolve => setTimeout(resolve, 500));
             continue;
         } 
         await new Promise(resolve => setTimeout(resolve, 500));
@@ -275,7 +281,7 @@ console.log('--------------------------//--------------------------//-----------
         
         // Modo de envio
         await new Promise(resolve => setTimeout(resolve, 2000));
-        await page.keyboard.press('Tab');
+        await frame.click('.campoModoEnvio.inputLong ')
         await page.keyboard.type(ModoEnvio.toString()); 
         await page.keyboard.press('Enter');
 
