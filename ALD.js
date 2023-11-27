@@ -181,7 +181,7 @@ console.log('--------------------------//--------------------------//-----------
         // Verifica se o formulário abriu 
         let flagReload = false
         let contador_abriu = 0;
-        while (contador_abriu < 11){
+        while (contador_abriu < 20){
             const xabriu = 140;
             const yabriu = 943;
             await page.screenshot({ path: 'images/screenshot_abriu.png' });
@@ -191,11 +191,11 @@ console.log('--------------------------//--------------------------//-----------
             if (!cor_abriu) {
                 console.log(`${new Date().toLocaleString()} - Entrou na tela de validação`);
                 await new Promise(resolve => setTimeout(resolve, 3500));
-                contador_abriu = 11;
+                contador_abriu = 20;
             } else {
                 await new Promise(resolve => setTimeout(resolve, 2000));
                 contador_abriu = contador_abriu + 1;
-                if (contador_abriu > 10) {
+                if (contador_abriu > 19) {
                     console.log(`${new Date().toLocaleString()} - Não foi possível abrir o formulário`);
                     console.log('--------------------------//--------------------------//--------------------------');
                     await page.reload();
@@ -209,6 +209,7 @@ console.log('--------------------------//--------------------------//-----------
         const frame = await frameElement.contentFrame();
 
 
+        // Data atual
         await new Promise(resolve => setTimeout(resolve, 500));
         await frame.click('#radioDataAtual')
         await new Promise(resolve => setTimeout(resolve, 500));
@@ -249,7 +250,7 @@ console.log('--------------------------//--------------------------//-----------
         }
         const checkboxSelector = '#chkLummaPaga'; 
         const isChecked = await isCheckboxChecked(frame, checkboxSelector);
-        if (LummaP === 'Sim') {
+        if (LummaP.toUpperCase() === 'SIM') {
              if (!isChecked){
                 await frame.click('#lblLummaPaga')
              } 
@@ -317,11 +318,14 @@ console.log('--------------------------//--------------------------//-----------
         await new Promise(resolve => setTimeout(resolve, 1000));
 
         // Órgão
+
+        if (Orgao !== undefined) {
         await new Promise(resolve => setTimeout(resolve, 500));
         await frame.click('#cmbOrgaoBol_chosen');
         await page.keyboard.type(Orgao.toString()); 
         await new Promise(resolve => setTimeout(resolve, 500));
         await page.keyboard.press('Enter');
+        }
 
         // Valor
         await new Promise(resolve => setTimeout(resolve, 500));
@@ -340,6 +344,7 @@ console.log('--------------------------//--------------------------//-----------
         await new Promise(resolve => setTimeout(resolve, 1000));
         
         // Banco
+        if (Banco !== undefined){
         await frame.evaluate((textToSelect) => {
             let selectElement = document.querySelector("#cmbBancoBol");
             for(let i = 0; i < selectElement.options.length; i++) {
@@ -348,7 +353,8 @@ console.log('--------------------------//--------------------------//-----------
                 break;
               }
             }
-          }, Banco);          
+          }, Banco);      
+        }    
         await new Promise(resolve => setTimeout(resolve, 2000));
     // Limpa campos de email
 
@@ -359,7 +365,7 @@ console.log('--------------------------//--------------------------//-----------
         await page.keyboard.press('Backspace')
 
         await new Promise(resolve => setTimeout(resolve, 500));
-        for (let j=0; j<7; j++) {
+        for (let j=0; j<8; j++) {
           await page.keyboard.press('Tab')
           await page.keyboard.down('Control');
           await page.keyboard.press('KeyA');
