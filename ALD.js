@@ -35,8 +35,8 @@ console.log('--------------------------//--------------------------//-----------
 
 (async () => {
   // Iniciar o navegador
-    const browser = await puppeteer.launch({ headless: false }); // 'new' para rodar em background
-
+    const browser = await puppeteer.launch({ headless: 'new' }); // 'new' para rodar em background
+    await new Promise(resolve => setTimeout(resolve, 5000));
     // Abrir uma nova página
     const page = await browser.newPage();
 
@@ -79,14 +79,6 @@ console.log('--------------------------//--------------------------//-----------
     
 
     for (let i = 0; i < dados.length; i++){
-      // if (!dados_retorno[i]['STATUS']) {
-      //   return
-      // }
-      // // Valida se já tem status no retorno
-      // if (dados_retorno[i]['STATUS'] !== undefined) {
-      //   dados[i]['STATUS'] = dados_retorno[i]['STATUS']
-      //   continue;
-      // } 
 
         console.log()
         console.log(`\n--------------------------//------Linha ${i}------//--------------------------`);
