@@ -33,9 +33,12 @@ console.log(`--------------------------//     START AUTOMATION - USER:  ${email}
 console.log('--------------------------//--------------------------//--------------------------');
 console.log('--------------------------//--------------------------//--------------------------');
 
-(async () => {
+let i;
+async function startAutomation() {
+    let browser;
+    try {
   // Iniciar o navegador
-    const browser = await puppeteer.launch({ headless: 'new' }); // 'new' para rodar em background
+    browser = await puppeteer.launch({ headless: 'new' }); // 'new' para rodar em background
     await new Promise(resolve => setTimeout(resolve, 5000));
     // Abrir uma nova página
     const page = await browser.newPage();
@@ -78,7 +81,7 @@ console.log('--------------------------//--------------------------//-----------
     console.log(`--------------------------//------ ${dados.length} Registros ------//--------------------------`)
     
 
-    for (let i = 0; i < dados.length; i++){
+    for (i = i || 0; i < dados.length; i++){
 
         console.log()
         console.log(`\n--------------------------//------Linha ${i}------//--------------------------`);
@@ -482,4 +485,16 @@ console.log('--------------------------//--------------------------//-----------
     // Enviar email ao usuário 
     sendEmail(email, "07 - Multas ALD") 
     console.error("Processo finalizado com sucesso.")
-})(); 
+    } catch (error) {
+        console.error('Ocorreu um erro:', error);
+        if (browser) {
+            await browser.close();
+        }
+        // Reiniciar a automação em caso de erro
+        await new Promise(resolve => setTimeout(resolve, 10000));
+        console.log(`${new Date().toLocaleString()} - Um erro foi apresentado, reiniciando...`)
+        startAutomation();
+    }
+}; 
+
+startAutomation()
