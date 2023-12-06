@@ -33,11 +33,12 @@ console.log(`--------------------------//     START AUTOMATION - USER:  ${email}
 console.log('--------------------------//--------------------------//--------------------------');
 console.log('--------------------------//--------------------------//--------------------------');
 
-let i;
+let i = 0
+let value = 0
 async function startAutomation() {
     let browser;
     try {
-  // Iniciar o navegador
+    //Iniciar o navegador
     browser = await puppeteer.launch({ headless: 'new' }); // 'new' para rodar em background
     await new Promise(resolve => setTimeout(resolve, 5000));
     // Abrir uma nova página
@@ -78,10 +79,10 @@ async function startAutomation() {
             }
     }}
 
-    console.log(`--------------------------//------ ${dados.length} Registros ------//--------------------------`)
+    console.log(`--------------------------//------ ${dados.length - value} Registros ------//--------------------------`)
     
 
-    for (i = i || 0; i < dados.length; i++){
+    for (i = value; i < dados.length; i++){
 
         console.log()
         console.log(`\n--------------------------//------Linha ${i}------//--------------------------`);
@@ -283,13 +284,14 @@ async function startAutomation() {
 
 
         // Carimbo da lumma
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 2000));
         await frame.click('.DriverNameClass.datepicker');
         await page.keyboard.type(CarimboLumma.toString(), {delay: 100}); 
+        await new Promise(resolve => setTimeout(resolve, 2000));
         await page.keyboard.press('Tab');
 
         // Carimbo do Cliente
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 2000));
         await page.keyboard.type(CarimboCliente.toString()); 
         await page.keyboard.press('Enter');
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -493,6 +495,7 @@ async function startAutomation() {
         // Reiniciar a automação em caso de erro
         await new Promise(resolve => setTimeout(resolve, 10000));
         console.log(`${new Date().toLocaleString()} - Um erro foi apresentado, reiniciando...`)
+        value = i
         startAutomation();
     }
 }; 
