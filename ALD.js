@@ -20,10 +20,6 @@ const workbook = XLSX.readFile('S:\\Automacoes\\Multas\\07 - Multas ALD\\Ald_val
 const sheet_name_list = workbook.SheetNames;
 const dados = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
 
-// const workbook_retorno = XLSX.readFile('S:\\Automacoes\\Multas\\07 - Multas ALD\\Retorno\\Validacao_retorno.xlsx');
-// const sheet_name_list_retorno = workbook_retorno.SheetNames;
-// const dados_retorno = XLSX.utils.sheet_to_json(workbook_retorno.Sheets[sheet_name_list_retorno[0]]);
-
 // console.error(dados_retorno)
 const email = dados[0]['User Process']
 
@@ -495,7 +491,8 @@ async function startAutomation() {
         // Reiniciar a automação em caso de erro
         await new Promise(resolve => setTimeout(resolve, 10000));
         console.log(`${new Date().toLocaleString()} - Um erro foi apresentado, reiniciando...`)
-        value = i
+        console.error(`${new Date().toLocaleString()} - Um erro foi apresentado, reiniciando...`)
+        value = i + 1
         startAutomation();
     }
 }; 
