@@ -34,22 +34,19 @@ let value = 0
 async function startAutomation() {
     let browser;
     try {
-    //Iniciar o navegador
-    browser = await puppeteer.launch({ headless: 'new' }); // 'new' para rodar em background
-    await new Promise(resolve => setTimeout(resolve, 5000));
-    // Abrir uma nova página
-    const page = await browser.newPage();
+        browser = await puppeteer.launch({ headless: 'new',
+                                           executablePath: 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe' });
+        const page = await browser.newPage();
+        await page.setViewport({ width: 1280, height: 1024 });
+        await new Promise(resolve => setTimeout(resolve, 10000));
 
-    // Definir a resolução da janela
-    await page.setViewport({ width: 1280, height: 1024 });
+        // Navega até a página desejada
+        await page.goto(process.env.process);
 
-    // Navegar até o URL especificado
-    await page.goto(process.env.process);
-
-    // Inserir login, senha e logar
-    await page.type('#TxtLogin', process.env.user);
-    await page.type('#TxtPassword', process.env.password);
-    await page.keyboard.press('Enter');
+        // Inserir login, senha e logar
+        await page.type('#TxtLogin', process.env.user);
+        await page.type('#TxtPassword', process.env.password);
+        await page.keyboard.press('Enter');
 
 
     let contador_inicio = 0;
