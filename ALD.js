@@ -34,8 +34,7 @@ let value = 0
 async function startAutomation() {
     let browser;
     try {
-        browser = await puppeteer.launch({ headless: 'new',
-                                           executablePath: 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe' });
+        browser = await puppeteer.launch({ headless: 'new' });
         const page = await browser.newPage();
         await page.setViewport({ width: 1280, height: 1024 });
         await new Promise(resolve => setTimeout(resolve, 10000));
