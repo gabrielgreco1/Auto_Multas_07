@@ -127,7 +127,7 @@ async function startAutomation() {
         // AIT 
         await page.mouse.click(295, 345, { clickCount: 2 });
         // Pega dados da coluna no excel 
-        await page.keyboard.type(AIT.toString());  
+        await page.keyboard.type(AIT.trim());  
         await page.keyboard.press('Tab');
         await page.keyboard.press('Enter');
         await new Promise(resolve => setTimeout(resolve, 2000));
